@@ -1,0 +1,60 @@
+{% extends "search.html" %}
+{% block content %}
+<style type = "text/css"> .important { color: red; } </style>
+<h3> Search Result </h3>
+{%if Item %}
+<ul>
+    {% set i = 0 %}
+{% for item in Item %}
+    <li><p class="important"> ItemID: {{ item.ItemID|e }}</p>
+        <div>   - <b>Name: </b> {{ item.Name |e}}</div>
+        <div>   - <b>Currently: </b>{{ item.Currently |e}}</div>
+        <div>   - <b>First_Bid: </b>{{ item.First_Bid |e}}</div>
+        <div>   - <b>Buy_Price: </b>{{ item.Buy_Price |e}}</div>
+        <div>   - <b>Number_of_Bids: </b>{{ item.Number_of_Bids |e}}</div>
+        <div>   - <b>Started: </b>{{ item.Started |e}}</div>
+        <div>   - <b>Ends: </b>{{ item.Ends |e}}</div>
+        <div>   - <b>Seller_UserID: </b>{{ item.Seller_UserID |e}}</div>
+        <div>   - <b>Description: </b>{{ item.Description  |e}}</div>
+        <div>   - <b>Categories: </b>
+            {% for cat in Categories[i] %}
+                {{ cat.Category |e}},
+            {% endfor %}
+        </div>
+        <div>   - <b>Status: </b>{{ status |e}} </div>
+        {% if Bids[i] %}
+        <div>   - <b>Bids: </b>
+            <table border = 'solid 3px black' style="width:60%">
+                <thead><tr style="LINE-HEIGHT:27px">
+                    <th>Bidder Name
+                    <th>Time
+                    <th >Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for bid in Bids[i] %}
+                <tr style="LINE-HEIGHT:27px">
+                    <td>{{bid.UserID |safe }}
+                    <td>{{ bid.Time |safe }}
+                    <td>{{ bid.Amount |safe}}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+        {% if Winner[i] %}
+            <div>   - <b>Winner: </b>{{ Winner[i][0].UserID }}</div>
+        {% endif %}
+        {% set i = i + 1 %}
+    </li>
+{% endfor %}
+</ul>
+{% else %}
+    <div>No matching Item!!</div>
+{% endif %}
+
+
+
+
+{% endblock %}
